@@ -1,0 +1,13 @@
+Django==4.1.2
+djangorestframework
+django-mysql==2.2.0
+setuptools
+channels
+django-filter
+drf-nested-routers
+django-debug-toolbar
+djoser
+pillow
+django-filter
+django-import-export
+django-cors-headers

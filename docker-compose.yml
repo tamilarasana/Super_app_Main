@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  db:
+    image: mariadb:10.5.8
+    ports:
+      - "3308:3308"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      MYSQL_DATABASE: "kalyanimotorsdb"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:80
+    volumes:
+      - .:/code
+    ports:
+      - "80:80"
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+    restart: always
+    ports:
+      - 8000:80
+    volumes:
+      - /sessions
